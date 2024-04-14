@@ -266,9 +266,8 @@ def action():
     app.quit()
 
 
-button1 = Button(app, text="Open Music", command=action)  # Dummy command, since camera is already open
-button1.pack()
-Button2 = Button
+playMusicButton = Button(app, text="▶️ Play Music", command=action)  # Dummy command, since camera is already open
+playMusicButton.pack()
 
 # Create an infinite loop for displaying app on screen
 app.mainloop()

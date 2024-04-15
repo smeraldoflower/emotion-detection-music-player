@@ -1,21 +1,14 @@
-"""
-Emotion Detection:
-Model from: https://github.com/onnx/models/blob/main/vision/body_analysis/emotion_ferplus/model/emotion-ferplus-8.onnx
-Model name: emotion-ferplus-8.onnx
-"""
-
 import cv2
 import numpy as np
 import time
 import os
-from flask import render_template,Flask,Response,url_for
-
-
-
+from tkinter import *
+from PIL import Image, ImageTk
 from cv2 import dnn
 from math import ceil
+import threading
+import webbrowser
 
-app = Flask(__name__)
 
 image_mean = np.array([127, 127, 127])
 image_std = 128.0
@@ -30,6 +23,7 @@ min_boxes = [
 ]
 strides = [8.0, 16.0, 32.0, 64.0]
 threshold = 0.5
+
 
 def define_img_size(image_size):
     shrinkage_list = []
@@ -69,7 +63,6 @@ def generate_priors(
                     ])
     print("priors nums:{}".format(len(priors)))
     return np.clip(priors, 0.0, 1.0)
-
 
 
 def hard_nms(box_scores, iou_threshold, top_k=-1, candidate_size=200):
@@ -170,8 +163,19 @@ def center_form_to_corner_form(locations):
     )
 
 
-emo = {}
+app = Tk()
+
+# Bind the app with Escape keyboard to
+# quit app whenever pressed
+app.bind('<Escape>', lambda e: app.quit())
+
+# Create a label and display it on app
+label_widget = Label(app)
+label_widget.pack()
+
 cap = cv2.VideoCapture(0)
+emo = {}
+
 
 def FER_live_cam():
     emotion_dict = {
@@ -184,21 +188,12 @@ def FER_live_cam():
         6: 'fear'
     }
 
-    # cap = cv2.VideoCapture(0)
-    # cap = cv2.VideoCapture(0)
-
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
     size = (frame_width, frame_height)
-    # result = cv2.VideoWriter('infer2-test.avi',
-    #                      cv2.VideoWriter_fourcc(*'MJPG'),
-    #                      10, size)
 
-    # Read ONNX model
-    model = 'onnx_model.onnx'
     model = cv2.dnn.readNetFromONNX('emotion-ferplus-8.onnx')
 
-    # Read the Caffe face detector.
     model_path = 'RFB-320/RFB-320.caffemodel'
     proto_path = 'RFB-320/RFB-320.prototxt'
     net = dnn.readNetFromCaffe(proto_path, model_path)
@@ -207,112 +202,74 @@ def FER_live_cam():
     height = input_size[1]
     priors = define_img_size(input_size)
 
-    while cap.isOpened():
+    while True:
         ret, frame = cap.read()
+        frame[:, :] = frame[:, ::-1]
+        x = 0
         if ret:
             img_ori = frame
-            #print("frame size: ", frame.shape)
             rect = cv2.resize(img_ori, (width, height))
             rect = cv2.cvtColor(rect, cv2.COLOR_BGR2RGB)
-            net.setInput(dnn.blobFromImage(
-                rect, 1 / image_std, (width, height), 127)
-            )
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+
+            net.setInput(dnn.blobFromImage(rect, 1 / 128.0, (width, height), 127))
             start_time = time.time()
             boxes, scores = net.forward(["boxes", "scores"])
             boxes = np.expand_dims(np.reshape(boxes, (-1, 4)), axis=0)
             scores = np.expand_dims(np.reshape(scores, (-1, 2)), axis=0)
-            boxes = convert_locations_to_boxes(
-                boxes, priors, center_variance, size_variance
-            )
+            boxes = convert_locations_to_boxes(boxes, priors, center_variance, size_variance)
             boxes = center_form_to_corner_form(boxes)
-            boxes, labels, probs = predict(
-                img_ori.shape[1],
-                img_ori.shape[0],
-                scores,
-                boxes,
-                threshold
-            )
+            boxes, labels, probs = predict(img_ori.shape[1], img_ori.shape[0], scores, boxes, threshold)
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             for (x1, y1, x2, y2) in boxes:
                 w = x2 - x1
                 h = y2 - y1
-                cv2.rectangle(frame, (x1,y1), (x2, y2), (255,0,0), 2)
-                resize_frame = cv2.resize(
-                    gray[y1:y1 + h, x1:x1 + w], (64, 64)
-                )
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
+                resize_frame = cv2.resize(gray[y1:y1 + h, x1:x1 + w], (64, 64))
                 resize_frame = resize_frame.reshape(1, 1, 64, 64)
                 model.setInput(resize_frame)
                 output = model.forward()
                 end_time = time.time()
                 fps = 1 / (end_time - start_time)
-                print(f"FPS: {fps:.1f}")
                 pred = emotion_dict[list(output[0]).index(max(output[0]))]
-                cv2.rectangle(
-                    img_ori,
-                    (x1, y1),
-                    (x2, y2),
-                    (215, 5, 247),
-                    2,
-                    lineType=cv2.LINE_AA
-                )
+                cv2.rectangle(img_ori, (x1, y1), (x2, y2), (215, 5, 247), 2, lineType=cv2.LINE_AA)
+                cv2.putText(frame, pred, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (215, 5, 247), 2,
+                            lineType=cv2.LINE_AA)
 
-                print(pred)
                 if pred not in emo:
                     emo[pred] = 1
                 else:
                     emo[pred] = emo[pred] + 1
 
-                cv2.putText(
-                    frame,
-                    pred,
-                    (x1, y1-10),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.8,
-                    (215, 5, 247),
-                    2,
-                    lineType=cv2.LINE_AA
-                )
+            captured_image = Image.fromarray(frame)
+            photo_image = ImageTk.PhotoImage(image=captured_image)
+            label_widget.photo_image = photo_image
+            label_widget.configure(image=photo_image)
+
+            cv2.waitKey(10)
 
 
-            # result.write(frame)
+# Create a thread to run the function
+thread = threading.Thread(target=FER_live_cam)
+thread.daemon = True
+thread.start()
 
 
-
-            # cv2.imshow('frame', frame)
-            # if cv2.waitKey(1) & 0xFF == ord('q'):
-            #     break
-
-            try:
-                new , buffer =cv2.imencode(".jpg", cv2.flip(frame,1))
-                fframe = buffer.tobytes()
-
-                yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n' + fframe + b'\r\n')
-            except Exception as e:
-                pass
-
-
-        else:
-            break
-    #
-    # cap.release()
-    # # result.release()
-    # cv2.destroyAllWindows()
+def action():
+    url = "file:///C:/Users/Deandre/Downloads/Soulja%20Boy-%20Doo%20Doo%20Head.mp3"
+    webbrowser.open(url)
     maxx = max(emo.values())
     for k in emo.keys():
         if emo[k] == maxx:
             print(f'Your mood is {k}')
 
-@app.route('/video_feed')
-def video_feed():
-    return Response(FER_live_cam(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    app.quit()
 
-@app.route("/")
-def index():
-    return render_template("captur.html")
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001)
+button1 = Button(app, text="Open Music", command=action)  # Dummy command, since camera is already open
+button1.pack()
+Button2 = Button
 
-cap.release()
-cv2.destroyAllWindows()
+# Create an infinite loop for displaying app on screen
+app.mainloop()

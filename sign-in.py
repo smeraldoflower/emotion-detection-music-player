@@ -3,6 +3,8 @@ import sqlite3
 import re
 from werkzeug.security import generate_password_hash,check_password_hash
 
+from expression_ssd_detect import Start_cam
+
 window = tkinter.Tk()
 window.geometry('340x440')
 window.configure(bg='#333333')
@@ -55,9 +57,9 @@ def signin(name, password):
 def open_next_window():
     # Close the current window
     window.destroy()
-    # Execute code from another file
-    with open('expression_ssd_detect.py', 'r') as file:
-        exec(file.read())
+    # Execute the code from expression_ssd_detect.py
+    exec(open('expression_ssd_detect.py').read())
+    Start_cam()
 
 
 #creating widgets

@@ -1,6 +1,9 @@
 import threading
-import webbrowser
+
+
+import Music_player
 from machine_learning import *  # import contains functions for the emotion detection in the fer_live_cam
+import FrameGui
 
 app = Tk()  # Instantiate tkinker class
 
@@ -9,110 +12,142 @@ app = Tk()  # Instantiate tkinker class
 app.bind('<Escape>', lambda e: app.quit())
 
 # Create a label and display it on app
-label_widget = Label(app)
-label_widget.pack()
+# label_widget = Label(app)
+# label_widget.pack()
 
 # capturing video from the user's webcam
-cap = cv2.VideoCapture(0)
 
-# data structure to catch the most accurate emotion detected
-emo = {}
 
 
 # function that runs the logic for the emotion detection and displays the tkinter GUI
-def Start_cam():
-    emotion_dict = {
-        0: 'neutral',
-        1: 'happiness',
-        2: 'surprise',
-        3: 'sadness',
-        4: 'anger',
-        5: 'disgust',
-        6: 'fear'
-    }
+class Emotion:
+    def __init__(self,app):
+        self.app = app
+        self.cap = cv2.VideoCapture(0)
+        self.cancel_cam = False
 
-    frame_width = int(cap.get(3))
-    frame_height = int(cap.get(4))
-    size = (frame_width, frame_height)
+        # data structure to catch the most accurate emotion detected
+        self.emo = {}
+        self.button1 = Button(self.app, text="Open Music", command=self.action)
+        self.button1.grid(row=1,column=0)# Dummy command, since camera is already open
+        self.thread_start()
+        # self.label_widget = Label(app) # option
+        # self.label_widget.pack()
 
-    model = cv2.dnn.readNetFromONNX('emotion-ferplus-8.onnx')
+    def Start_cam(self):
+        emotion_dict = {
+            0: 'neutral',
+            1: 'happiness',
+            2: 'surprise',
+            3: 'sadness',
+            4: 'anger',
+            5: 'disgust',
+            6: 'fear'
+        }
 
-    model_path = 'RFB-320/RFB-320.caffemodel'
-    proto_path = 'RFB-320/RFB-320.prototxt'
-    net = dnn.readNetFromCaffe(proto_path, model_path)
-    input_size = [320, 240]
-    width = input_size[0]
-    height = input_size[1]
-    priors = define_img_size(input_size)
+        frame_width = int(self.cap.get(3))
+        frame_height = int(self.cap.get(4))
+        size = (frame_width, frame_height)
 
-    while True:
-        ret, frame = cap.read()
-        frame[:, :] = frame[:, ::-1]
-        x = 0
-        if ret:
-            img_ori = frame
-            rect = cv2.resize(img_ori, (width, height))
-            rect = cv2.cvtColor(rect, cv2.COLOR_BGR2RGB)
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        model = cv2.dnn.readNetFromONNX('emotion-ferplus-8.onnx')
 
+        model_path = 'RFB-320/RFB-320.caffemodel'
+        proto_path = 'RFB-320/RFB-320.prototxt'
+        net = dnn.readNetFromCaffe(proto_path, model_path)
+        input_size = [320, 240]
+        width = input_size[0]
+        height = input_size[1]
+        priors = define_img_size(input_size)
 
-            net.setInput(dnn.blobFromImage(rect, 1 / 128.0, (width, height), 127))
-            start_time = time.time()
-            boxes, scores = net.forward(["boxes", "scores"])
-            boxes = np.expand_dims(np.reshape(boxes, (-1, 4)), axis=0)
-            scores = np.expand_dims(np.reshape(scores, (-1, 2)), axis=0)
-            boxes = convert_locations_to_boxes(boxes, priors, center_variance, size_variance)
-            boxes = center_form_to_corner_form(boxes)
-            boxes, labels, probs = predict(img_ori.shape[1], img_ori.shape[0], scores, boxes, threshold)
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            for (x1, y1, x2, y2) in boxes:
-                w = x2 - x1
-                h = y2 - y1
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                resize_frame = cv2.resize(gray[y1:y1 + h, x1:x1 + w], (64, 64))
-                resize_frame = resize_frame.reshape(1, 1, 64, 64)
-                model.setInput(resize_frame)
-                output = model.forward()
-                end_time = time.time()
-                fps = 1 / (end_time - start_time)
-                pred = emotion_dict[list(output[0]).index(max(output[0]))]
-                cv2.rectangle(img_ori, (x1, y1), (x2, y2), (215, 5, 247), 2, lineType=cv2.LINE_AA)
-                cv2.putText(frame, pred, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (215, 5, 247), 2,
-                            lineType=cv2.LINE_AA)
-
-                if pred not in emo:
-                    emo[pred] = 1
-                else:
-                    emo[pred] = emo[pred] + 1
-
-            captured_image = Image.fromarray(frame)  # passing the frame to tkinter to be displayed
-            photo_image = ImageTk.PhotoImage(image=captured_image)
-            label_widget.photo_image = photo_image
-            label_widget.configure(image=photo_image)
-
-            cv2.waitKey(10)
+        while True:
+            ret, frame = self.cap.read()
+            frame[:, :] = frame[:, ::-1]
+            x = 0
+            if ret:
+                img_ori = frame
+                print(img_ori)
+                rect = cv2.resize(img_ori, (width, height))
+                rect = cv2.cvtColor(rect, cv2.COLOR_BGR2RGB)
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
 
-# Create a thread to run the function
-thread = threading.Thread(target=Start_cam)
-thread.daemon = True
-thread.start()
+                net.setInput(dnn.blobFromImage(rect, 1 / 128.0, (width, height), 127))
+                start_time = time.time()
+                boxes, scores = net.forward(["boxes", "scores"])
+                boxes = np.expand_dims(np.reshape(boxes, (-1, 4)), axis=0)
+                scores = np.expand_dims(np.reshape(scores, (-1, 2)), axis=0)
+                boxes = convert_locations_to_boxes(boxes, priors, center_variance, size_variance)
+                boxes = center_form_to_corner_form(boxes)
+                boxes, labels, probs = predict(img_ori.shape[1], img_ori.shape[0], scores, boxes, threshold)
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                # print(frame.shape)
+                for (x1, y1, x2, y2) in boxes:
+                    w = x2 - x1
+                    h = y2 - y1
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
+                    resize_frame = cv2.resize(gray[y1:y1 + h, x1:x1 + w], (64, 64))
+                    resize_frame = resize_frame.reshape(1, 1, 64, 64)
+                    model.setInput(resize_frame)
+                    output = model.forward()
+                    end_time = time.time()
+                    fps = 1 / (end_time - start_time)
+                    pred = emotion_dict[list(output[0]).index(max(output[0]))]
+                    cv2.rectangle(img_ori, (x1, y1), (x2, y2), (215, 5, 247), 2, lineType=cv2.LINE_AA)
+                    cv2.putText(frame, pred, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (215, 5, 247), 2,
+                                lineType=cv2.LINE_AA)
+
+                    if pred not in self.emo:
+                        self.emo[pred] = 1
+                    else:
+                        self.emo[pred] = self.emo[pred] + 1
+
+                # captured_image = Image.fromarray(frame)  # passing the frame to tkinter to be displayed
+                # photo_image = ImageTk.PhotoImage(image=captured_image)
+                # self.label_widget.photo_image = photo_image
+                # self.label_widget.configure(image=photo_image)
+                FrameGui.Frame_gui(frame, self.app, True)
+            if self.cancel_cam:
+                # cv2.waitKey(0)
+                break
 
 
-def action():
-    url = "file:///C:/Users/Deandre/Downloads/Soulja%20Boy-%20Doo%20Doo%20Head.mp3"
-    webbrowser.open(url)
-    maxx = max(emo.values())
-    for k in emo.keys():
-        if emo[k] == maxx:
-            print(f'Your mood is {k}')
+    # Create a thread to run the function
+    # thread = threading.Thread(target=Start_cam)
+    # thread.daemon = True
+    # thread.start()
 
-    app.quit()  # freeing resources
+    # Start_cam()
+
+    def thread_start(self):
+
+    # Create a thread to run the function
+        thread = threading.Thread(target=self.Start_cam)
+        thread.daemon = True
+        thread.start()
 
 
-button1 = Button(app, text="Open Music", command=action)  # Dummy command, since camera is already open
-button1.pack()
-Button2 = Button
+    def action(self):
 
-# Create an infinite loop for displaying app on screen
+        mood_count = max(self.emo.values())
+        mood = ""
+        for k in self.emo.keys():
+            if self.emo[k] == mood_count:
+                mood = k
+                print(f'Your mood is {k}')
+        self.cancel_cam = True
+        self.cap.release()
+        Music_player.Window(self.app,mood=mood)
+
+        # FrameGui.Frame_gui(np.zeros(3), app).setRaise(True)
+        # FrameGui.Frame_gui(np.zeros(3),app).label.config(image= "") #
+        # Music_player.Window(self.app,maxx)
+          # freeing resources
+
+
+# button1 = Button(app, text="Open Music", command=action)  # Dummy command, since camera is already open
+# button1.pack()
+
+
+
+Emotion(app)
 app.mainloop()

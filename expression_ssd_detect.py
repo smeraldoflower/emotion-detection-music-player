@@ -1,15 +1,17 @@
 import threading
-
+from tkinter import *
+from cv2 import dnn
+import cv2
 
 import Music_player
 from machine_learning import *  # import contains functions for the emotion detection in the fer_live_cam
 import FrameGui
 
-app = Tk()  # Instantiate tkinker class
+application = Tk()  # Instantiate Tkinker class
 
 # Bind the app with Escape keyboard to
 # quit app whenever pressed
-app.bind('<Escape>', lambda e: app.quit())
+application.bind('<Escape>', lambda e: application.quit())
 
 # Create a label and display it on app
 # label_widget = Label(app)
@@ -18,10 +20,9 @@ app.bind('<Escape>', lambda e: app.quit())
 # capturing video from the user's webcam
 
 
-
 # function that runs the logic for the emotion detection and displays the tkinter GUI
 class Emotion:
-    def __init__(self,app):
+    def __init__(self, app) -> None:
         self.app = app
         self.cap = cv2.VideoCapture(0)
         self.cancel_cam = False
@@ -29,12 +30,12 @@ class Emotion:
         # data structure to catch the most accurate emotion detected
         self.emo = {}
         self.button1 = Button(self.app, text="Open Music", command=self.action)
-        self.button1.grid(row=1,column=0)# Dummy command, since camera is already open
+        self.button1.grid(row=1, column=0)  # Dummy command, since camera is already open
         self.thread_start()
         # self.label_widget = Label(app) # option
         # self.label_widget.pack()
 
-    def Start_cam(self):
+    def start_cam(self):
         emotion_dict = {
             0: 'neutral',
             1: 'happiness',
@@ -45,11 +46,7 @@ class Emotion:
             6: 'fear'
         }
 
-        frame_width = int(self.cap.get(3))
-        frame_height = int(self.cap.get(4))
-        size = (frame_width, frame_height)
-
-        model = cv2.dnn.readNetFromONNX('emotion-ferplus-8.onnx')
+        model = cv2.dnn.readNetFromONNX('emotion-ferplus-8.onnx')  # Our machine learning model
 
         model_path = 'RFB-320/RFB-320.caffemodel'
         proto_path = 'RFB-320/RFB-320.prototxt'
@@ -62,7 +59,7 @@ class Emotion:
         while True:
             ret, frame = self.cap.read()
             frame[:, :] = frame[:, ::-1]
-            x = 0
+
             if ret:
                 img_ori = frame
                 print(img_ori)
@@ -70,9 +67,8 @@ class Emotion:
                 rect = cv2.cvtColor(rect, cv2.COLOR_BGR2RGB)
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-
                 net.setInput(dnn.blobFromImage(rect, 1 / 128.0, (width, height), 127))
-                start_time = time.time()
+
                 boxes, scores = net.forward(["boxes", "scores"])
                 boxes = np.expand_dims(np.reshape(boxes, (-1, 4)), axis=0)
                 scores = np.expand_dims(np.reshape(scores, (-1, 2)), axis=0)
@@ -89,8 +85,8 @@ class Emotion:
                     resize_frame = resize_frame.reshape(1, 1, 64, 64)
                     model.setInput(resize_frame)
                     output = model.forward()
-                    end_time = time.time()
-                    fps = 1 / (end_time - start_time)
+
+                    # fps = 1 / (end_time - start_time)
                     pred = emotion_dict[list(output[0]).index(max(output[0]))]
                     cv2.rectangle(img_ori, (x1, y1), (x2, y2), (215, 5, 247), 2, lineType=cv2.LINE_AA)
                     cv2.putText(frame, pred, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (215, 5, 247), 2,
@@ -110,7 +106,6 @@ class Emotion:
                 # cv2.waitKey(0)
                 break
 
-
     # Create a thread to run the function
     # thread = threading.Thread(target=Start_cam)
     # thread.daemon = True
@@ -120,14 +115,13 @@ class Emotion:
 
     def thread_start(self):
 
-    # Create a thread to run the function
-        thread = threading.Thread(target=self.Start_cam)
-        thread.daemon = True
+        # Create a thread to run the function
+        thread = threading.Thread(target=self.start_cam)
+        # thread.daemon = True
         thread.start()
 
-
     def action(self):
-
+        """Event handler for the Play Music Button"""
         mood_count = max(self.emo.values())
         mood = ""
         for k in self.emo.keys():
@@ -136,18 +130,11 @@ class Emotion:
                 print(f'Your mood is {k}')
         self.cancel_cam = True
         self.cap.release()
-        Music_player.Window(self.app,mood=mood)
-
-        # FrameGui.Frame_gui(np.zeros(3), app).setRaise(True)
-        # FrameGui.Frame_gui(np.zeros(3),app).label.config(image= "") #
-        # Music_player.Window(self.app,maxx)
-          # freeing resources
+        self.button1.destroy()
+        thread_music = threading.Thread(target=Music_player.Window, args=(self.app, mood,))
+        thread_music.start()
 
 
-# button1 = Button(app, text="Open Music", command=action)  # Dummy command, since camera is already open
-# button1.pack()
-
-
-
-Emotion(app)
-app.mainloop()
+if __name__ == "__main__":
+    Emotion(application)
+    application.mainloop()

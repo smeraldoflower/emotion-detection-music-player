@@ -1,12 +1,7 @@
 # Necessary logic for the Start_cam function
 
-import cv2
 import numpy as np
-import time
-import os
-from tkinter import *
-from PIL import Image, ImageTk
-from cv2 import dnn
+
 from math import ceil
 
 image_mean = np.array([127, 127, 127])
@@ -22,6 +17,8 @@ min_boxes = [
 ]
 strides = [8.0, 16.0, 32.0, 64.0]
 threshold = 0.5
+
+
 def define_img_size(image_size):
     shrinkage_list = []
     feature_map_w_h_list = []

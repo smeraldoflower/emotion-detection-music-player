@@ -7,11 +7,11 @@ import Music_player
 from machine_learning import *  # import contains functions for the emotion detection in the fer_live_cam
 import FrameGui
 
-application = Tk()  # Instantiate Tkinker class
-
-# Bind the app with Escape keyboard to
-# quit app whenever pressed
-application.bind('<Escape>', lambda e: application.quit())
+# application = Tk()  # Instantiate Tkinker class
+#
+# # Bind the app with Escape keyboard to
+# # quit app whenever pressed
+# application.bind('<Escape>', lambda e: application.quit())
 
 # Create a label and display it on app
 # label_widget = Label(app)
@@ -26,10 +26,18 @@ class Emotion:
         self.app = app
         self.cap = cv2.VideoCapture(0)
         self.cancel_cam = False
+        # width = self.app.winfo_screenwidth()
+        #
+        # height = self.app.winfo_screenheight()
+        # # setting tkinter window size
+        #
+        # self.app.geometry("%dx%d" % (width, height))
+        self.app.attributes("-fullscreen", True)
+        self.app.configure(background="#404040")
 
         # data structure to catch the most accurate emotion detected
         self.emo = {}
-        self.button1 = Button(self.app, text="Open Music", command=self.action)
+        self.button1 = Button(self.app, text="▶️ PLAY MUSIC", font=("Arial BOLD", 25), fg='black',bg='light blue', height=1, width=20,command=self.action)
         self.button1.grid(row=1, column=0)  # Dummy command, since camera is already open
         self.thread_start()
         # self.label_widget = Label(app) # option
@@ -58,6 +66,9 @@ class Emotion:
 
         while True:
             ret, frame = self.cap.read()
+            if self.cancel_cam:
+                # cv2.waitKey(0)
+                break
             frame[:, :] = frame[:, ::-1]
 
             if ret:
@@ -102,9 +113,9 @@ class Emotion:
                 # self.label_widget.photo_image = photo_image
                 # self.label_widget.configure(image=photo_image)
                 FrameGui.Frame_gui(frame, self.app, True)
-            if self.cancel_cam:
-                # cv2.waitKey(0)
-                break
+            # if self.cancel_cam:
+            #     # cv2.waitKey(0)
+            #     break
 
     # Create a thread to run the function
     # thread = threading.Thread(target=Start_cam)
@@ -134,7 +145,7 @@ class Emotion:
         thread_music = threading.Thread(target=Music_player.Window, args=(self.app, mood,))
         thread_music.start()
 
-
-if __name__ == "__main__":
-    Emotion(application)
-    application.mainloop()
+#
+# if __name__ == "__main__":
+#     Emotion(application)
+#     application.mainloop()

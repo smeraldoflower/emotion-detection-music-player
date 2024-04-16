@@ -1,3 +1,4 @@
+import tkinter
 from tkinter import *
 from PIL import Image, ImageTk
 import Music_player
@@ -8,7 +9,7 @@ class Frame_gui:
         self.frame = frame
         self.app = app
         self.pack = pack
-        self.container = Frame()
+        # self.container = Frame()
         # self.captured_img = Image.fromarray(frame)
         # self.photo = ImageTk.PhotoImage(self.captured_img)
         # self.label = Label(app, image=self.photo)
@@ -24,7 +25,15 @@ class Frame_gui:
     def set_pack(self, pack):
         if pack:
 
-            self.label.grid(row=0, column=0)
+            self.label.grid(row=0, column=0, sticky=tkinter.NSEW)
+            # self.container.grid(row=0, column=0,sticky=tkinter.NSEW)
+            # self.app.geometry("500x500")
+            # self.app.geometry("640x520")
+            self.app.attributes('-fullscreen', True)
+
+            self.app.grid_rowconfigure(0, weight=1)
+            self.app.grid_columnconfigure(0, weight=1)
+
 
     def setRaise(self, pack):
         if pack:
@@ -35,7 +44,7 @@ class Frame_gui:
         if frame is not None:
             self.captured_img = Image.fromarray(self.frame)
             self.photo = ImageTk.PhotoImage(self.captured_img)
-            self.label = Label(self.app, image=self.photo)
+            self.label = Label(self.app, image=self.photo,bg="#404040")
             self.label.image = self.photo
             self.set_pack(self.pack)
         else:

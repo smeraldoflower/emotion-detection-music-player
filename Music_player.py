@@ -12,6 +12,7 @@ import pygame
 
 class Window:
     def __init__(self, master, mood=None):
+        self.master = master
         self.mood = mood
         self.play_img = PhotoImage(file="play.png")
 
@@ -21,22 +22,28 @@ class Window:
 
         self.pause_img = PhotoImage(file="pause.png")
 
-        self.frame = Frame(master)
-        self.frame_bottom = Frame(self.frame)
+        self.frame = Frame(self.master, bg="#404040")
 
-        self.play_button = Button(self.frame_bottom,  text="", command=self.play_music,
-                                  borderwidth=0, image=self.play_img)
+        self.master.geometry("640x480")
+        self.master.attributes("-fullscreen",True)
+        self.master.grid_rowconfigure(0, weight=1)
+        self.master.grid_columnconfigure(0, weight=1)
 
-        self.prev_button = Button(self.frame_bottom,  text="", command=self.prev_music,
-                                  borderwidth=0, image=self.prev_img)
+        self.frame_bottom = Frame(self.frame, bg="#404040")
 
-        self.next_button = Button(self.frame_bottom,  text="", command=self.next_music,
-                                  borderwidth=0, image=self.next_img)
+        self.play_button = Button(self.frame_bottom,  text="▶", command=self.play_music,
+                                  borderwidth=0, font=("Arial BOLD", 40),bg="#404040",fg="white")
 
-        self.pause_button = Button(self.frame_bottom, text="", command=self.pause_music,
-                                   borderwidth=0, image=self.pause_img)
+        self.prev_button = Button(self.frame_bottom,  text="⏮", command=self.prev_music,
+                                  borderwidth=0, font=("Arial BOLD", 40),bg="#404040",fg="white")
 
-        self.song_list = Listbox(self.frame, bg="black", fg="white", width=100, height=15)
+        self.next_button = Button(self.frame_bottom,  text="⏭", command=self.next_music,
+                                  borderwidth=0,font=("Arial BOLD", 40),bg="#404040",fg="white")
+
+        self.pause_button = Button(self.frame_bottom, text="⏸", command=self.pause_music,
+                                   borderwidth=0,font=("Arial BOLD", 40),bg="#404040",fg="white")
+
+        self.song_list = Listbox(self.frame, bg="black", fg="white", width=100, height=15,font=("Consolas BOLD", 25))
 
         self.song_list.pack(fill="both", expand=True)
 
@@ -54,17 +61,17 @@ class Window:
         # self.play_button.grid(row=0,column=0)
         # self.pause_button.pack()
 
-        self.menu = Menu(master)
+        # self.menu = Menu(master)
 
         self.songs = []
 
         self.pause = False
 
-        master.config(menu=self.menu)
-
-        self.menu_bar = Menu(self.menu, tearoff=False)
-        self.menu_bar.add_command(label="Select Folder", command=self.load_music)
-        self.menu.add_cascade(label="File", menu=self.menu_bar)
+        # master.config(menu=self.menu)
+        #
+        # self.menu_bar = Menu(self.menu, tearoff=False)
+        # self.menu_bar.add_command(label="Select Folder", command=self.load_music)
+        # self.menu.add_cascade(label="File", menu=self.menu_bar)
         self.current_song = ""
         self.directory = ""
         self.load_music()

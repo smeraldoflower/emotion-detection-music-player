@@ -15,4 +15,5 @@ os.getcwd()
 
 for i in emotion_dict.values():
     path = i
-    os.mkdir(path)
+    if not os.path.exists(i):
+        os.mkdir(path)

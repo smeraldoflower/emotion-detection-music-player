@@ -1,7 +1,6 @@
-# Author: Nusaiba Mahmood
+# Author: Nusaiba Mahmood , Kwame
 # File: Screen_01_SignIn.py
-import threading
-import time
+
 # import everything from tkinter module
 from tkinter import *
 import SignUp
@@ -99,6 +98,7 @@ class SignIn:
 if __name__ == "__main__":
     guii = Tk()
     guii.geometry("800x500")
+
 
     # start the GUI
     win = SignIn(guii)

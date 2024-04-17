@@ -51,9 +51,9 @@ class SignUp:
         # when user press the button, the command or
         # function affiliated to that button is executed
 
-        self.signInButton = Button(self.frame, text=' Sign Up ', font=("Arial BOLD", 11), fg='black',
+        self.signUpButton = Button(self.frame, text=' Sign Up ', font=("Arial BOLD", 11), fg='black',
                                    bg='light goldenrod', height=1, width=20, command=self.sign_up)
-        self.signInButton.grid(row=7, column=1, pady=1)
+        self.signUpButton.grid(row=7, column=1, pady=1)
         self.label_auth.grid(row=8,column=1,sticky="n")
         self.frame.configure(background="#404040", width="800", height="500")
         self.frame.columnconfigure((0, 2), weight=1, uniform="anything")

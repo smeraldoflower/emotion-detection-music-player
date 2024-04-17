@@ -1,3 +1,10 @@
+#  MODEL Citation: @inproceedings{BarsoumICMI2016,
+#     title={Training Deep Networks for Facial Expression Recognition with Crowd-Sourced Label Distribution},
+#     author={Barsoum, Emad and Zhang, Cha and Canton Ferrer, Cristian and Zhang, Zhengyou},
+#     booktitle={ACM International Conference on Multimodal Interaction (ICMI)},
+#     year={2016}
+# }
+
 import threading
 from tkinter import *
 from cv2 import dnn

@@ -17,8 +17,8 @@ class SignIn:
     def __init__(self, gui):
         self.gui = gui
         self.frame = Frame(gui)
-
         self.gui.attributes('-fullscreen', True)
+        
         self.gui.grid_rowconfigure(0, weight=1)
         self.gui.grid_columnconfigure(0, weight=1)
         self.welcomeLabel = Label(self.frame, text=" Sign In ", fg="white", bg="#404040", font=("Consolas BOLD", 30))
@@ -46,9 +46,7 @@ class SignIn:
         self.signUpButton = Button(self.frame, text=' Sign Up ', font=("Arial BOLD", 11), fg='black', bg='light goldenrod', height=1,
                           width=20,command=self.switch)
         self.signUpButton.grid(row=7, column=1, pady=1)
-        self.label_auth = Label(self.frame, text="", fg="white",
-                                bg="#404040", font=("Arial BOLD", 12))
-
+        self.label_auth = Label(self.frame, text="", fg="white", bg="#404040", font=("Arial BOLD", 12))
 
         # # set the background colour of GUI window
         self.frame.configure(background="#404040", width=800, height=500)
@@ -81,6 +79,9 @@ class SignIn:
         password_check = re.search("[^\\s]{8,}", self.password.get())
         if not username_check or not password_check:
             print("Invalid username or password")
+
+            self.label_auth.config(text="Invalid username or password")
+
             return False
         # hashpass = self.hash_password(
         #     self.password.get())

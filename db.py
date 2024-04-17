@@ -3,7 +3,6 @@ import sqlite3
 import re
 from werkzeug.security import generate_password_hash,check_password_hash
 
-
 conn = sqlite3.connect('mydatabase.db')
 c = conn.cursor()
 
@@ -14,7 +13,7 @@ def hash_password(password):
     hashed_password = generate_password_hash(password)
     return hashed_password
 def signup(name,password):
-
+    # Insert username and password into the table
     try:
         c.execute("INSERT INTO signUp (username, password) VALUES (?, ?)", (name, password))
         # Commit changes and close connection
@@ -26,7 +25,6 @@ def signup(name,password):
         print("Username already exists")
         return False
 def signin(name, password):
-
     con = sqlite3.connect("mydatabase.db")
     check = f"SELECT * FROM signUp WHERE username='{name}'"
     output = con.execute(check)

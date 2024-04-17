@@ -5,10 +5,11 @@
 from tkinter import *
 from tkinter import filedialog
 import SignIn
-import expression_ssd_detect
+import EmotionDetection
+import AddMusic
 
 
-# import expression_ssd_detect
+# import EmotionDetection
 #
 # # Driver code
 # if __name__ == "__main__":
@@ -41,14 +42,21 @@ class Welcome:
         # location inside the root window
         # when user press the button, the command or
         # function affiliated to that button is executed
-        self.button1 = Button(self.frame, text=' ➕ ADD MUSIC DIRECTORY ', fg='black', bg='white', height=10, width=25,
-                              command=self.add_music)
+        self.button1 = Button(self.frame, text=' ➕ ADD MUSIC DIRECTORY ', 
+                              font=("Arial BOLD", 11),
+                              fg='black', bg='white', height=10, width=25,
+                              command=self.switch_addMusic)
         self.button1.grid(row=2, column=0)
 
-        self.button2 = Button(self.frame, text=' 🎵 DETECT EMOTION ', fg='black', bg='light blue', height=10, width=25,command=self.successful)
+        self.button2 = Button(self.frame, text=' 🎵 DETECT EMOTION ',
+                              font=("Arial BOLD", 11),
+                              fg='black', bg='light blue', height=10, width=25,
+                              command=self.successful)
         self.button2.grid(row=2, column=1)
 
-        self.button3 = Button(self.frame, text=' ↪ SIGN OUT ', fg='black', bg='pink', height=10, width=25,
+        self.button3 = Button(self.frame, text=' ↪ SIGN OUT ',
+                              font=("Arial BOLD", 11),
+                              fg='black', bg='pink', height=10, width=25,
                               command=self.reset)
         self.button3.grid(row=2, column=2)
         # set the background colour of GUI window
@@ -62,6 +70,11 @@ class Welcome:
 
         self.frame.pack()
 
+    def switch_addMusic(self):
+        # self.frame.forget()
+        AddMusic.AddMusic(self.gui).rais()
+        self.frame.destroy()
+            
     def switch(self):
         # self.frame.forget()
         # SignUp.SignUp(self.gui).rais()
@@ -72,7 +85,7 @@ class Welcome:
         self.frame.destroy()
 
     # def successful(self):
-    #     expression_ssd_detect.Emotion(self.gui)
+    #     EmotionDetection.Emotion(self.gui)
     #     self.frame.destroy()
 
     def rais(self):
@@ -82,7 +95,7 @@ class Welcome:
         directory = filedialog.askdirectory()
     def successful(self):
         self.frame.destroy()
-        expression_ssd_detect.Emotion(self.gui)
+        EmotionDetection.Emotion(self.gui)
 
 if __name__ == "__main__":
     pass

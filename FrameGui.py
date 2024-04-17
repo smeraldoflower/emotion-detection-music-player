@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import *
 from PIL import Image, ImageTk
-import Music_player
+import MusicPlayer
 
 
 class Frame_gui:

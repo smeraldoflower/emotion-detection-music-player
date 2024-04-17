@@ -30,11 +30,12 @@ import AddMusic
 #     gui.geometry("800x500")
 class Welcome:
     def __init__(self, gui,name):
+        self.name = name
         self.gui = gui
         self.frame = Frame(self.gui)
         self.gui.attributes('-fullscreen', True)
 
-        self.welcomeLabel = Label(self.frame, text=f" WELCOME {name}! ", fg="white", bg="#404040",
+        self.welcomeLabel = Label(self.frame, text=f" WELCOME {self.name}! ", fg="white", bg="#404040",
                                   font=("Consolas BOLD", 30))
         self.welcomeLabel.grid(row=0, column=1)
 
@@ -72,7 +73,7 @@ class Welcome:
 
     def switch_addMusic(self):
         # self.frame.forget()
-        AddMusic.AddMusic(self.gui).rais()
+        AddMusic.AddMusic(self.gui,self.name).rais()
         self.frame.destroy()
             
     def switch(self):

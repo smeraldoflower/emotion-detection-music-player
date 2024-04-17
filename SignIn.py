@@ -1,7 +1,6 @@
-# Author: Nusaiba Mahmood
+# Author: Nusaiba Mahmood , Kwame
 # File: Screen_01_SignIn.py
-import threading
-import time
+
 # import everything from tkinter module
 from tkinter import *
 import SignUp

@@ -7,6 +7,8 @@
 
 import threading
 from tkinter import *
+
+import numpy as np
 from cv2 import dnn
 import cv2
 
@@ -48,6 +50,7 @@ class Emotion:
         self.button1.grid(row=1, column=0)
 
         self.thread_start()
+        self.f = FrameGui.Frame_gui(np.zeros(3),self.app)
         # self.label_widget = Label(app) # option
         # self.label_widget.pack()
 
@@ -120,7 +123,7 @@ class Emotion:
                 # photo_image = ImageTk.PhotoImage(image=captured_image)
                 # self.label_widget.photo_image = photo_image
                 # self.label_widget.configure(image=photo_image)
-                FrameGui.Frame_gui(frame, self.app, True)
+                self.f.run(frame)
 
                 try:
                     self.button1.config(text=f"{pred} {self.emo[pred]}")

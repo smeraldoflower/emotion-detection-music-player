@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03e84bb4-a12d-46aa-9df1-07ef9942a649" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Gojo-PNG-Clipart.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Gojo-PNG.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gojo.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AddMusic.py" beforeDir="false" afterPath="$PROJECT_DIR$/AddMusic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CreateEmotionDirectories.py" beforeDir="false" afterPath="$PROJECT_DIR$/CreateEmotionDirectories.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Emotion/neutral/Best Day Of My Life (Cover Instrumental) [In the Style of American Authors] [360p] - Copy.mp3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/EmotionDetection.py" beforeDir="false" afterPath="$PROJECT_DIR$/EmotionDetection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Experimental Python Files/directorychangeTEST.py" beforeDir="false" afterPath="$PROJECT_DIR$/Experimental Python Files/directorychangeTEST.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MusicPlayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/MusicPlayer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SignIn.py" beforeDir="false" afterPath="$PROJECT_DIR$/SignIn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Welcome.py" beforeDir="false" afterPath="$PROJECT_DIR$/Welcome.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experimental Python Files/expression_gui_button.py" beforeDir="false" afterPath="$PROJECT_DIR$/Experimental Python Files/expression_gui_button.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experimental Python Files/expression_ssd_tkinter_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/Experimental Python Files/expression_ssd_tkinter_gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrameGui.py" beforeDir="false" afterPath="$PROJECT_DIR$/FrameGui.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,28 +37,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.AddMusic.executor": "Run",
-    "Python.CreateEmotionDirectories.executor": "Run",
-    "Python.EmotionDetection.executor": "Run",
-    "Python.FrameGui.executor": "Run",
-    "Python.MusicPlayer.executor": "Run",
-    "Python.SignIn.executor": "Run",
-    "Python.connection.executor": "Run",
-    "Python.directorychangeTEST.executor": "Run",
-    "Python.expression_ssd_detect.executor": "Run",
-    "Python.expression_ssd_detect_KWAME.executor": "Run",
-    "Python.expression_ssd_detectduplicate.executor": "Run",
-    "Python.sign-in.executor": "Run",
-    "Python.sign-up.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "kwame-branch",
-    "last_opened_file_path": "C:/Users/Deandre/Desktop/DEVELOPMENT/515 project/Facial-Emotion-Recognition",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.AddMusic.executor&quot;: &quot;Run&quot;,
+    &quot;Python.CreateEmotionDirectories.executor&quot;: &quot;Run&quot;,
+    &quot;Python.EmotionDetection.executor&quot;: &quot;Run&quot;,
+    &quot;Python.FrameGui.executor&quot;: &quot;Run&quot;,
+    &quot;Python.MusicPlayer.executor&quot;: &quot;Run&quot;,
+    &quot;Python.SignIn.executor&quot;: &quot;Run&quot;,
+    &quot;Python.connection.executor&quot;: &quot;Run&quot;,
+    &quot;Python.directorychangeTEST.executor&quot;: &quot;Run&quot;,
+    &quot;Python.expression_ssd_detect.executor&quot;: &quot;Run&quot;,
+    &quot;Python.expression_ssd_detect_KWAME.executor&quot;: &quot;Run&quot;,
+    &quot;Python.expression_ssd_detectduplicate.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sign-in.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sign-up.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;kwame-branch&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Deandre/Desktop/DEVELOPMENT/515 project/Facial-Emotion-Recognition&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Deandre\Desktop\DEVELOPMENT\515 project\Facial-Emotion-Recognition" />

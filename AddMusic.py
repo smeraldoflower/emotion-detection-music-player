@@ -22,57 +22,55 @@ class AddMusic:
         self.frame = Label(gui, image=self.bg)
         self.gui.attributes('-fullscreen', True)
 
-        self.AddLabel = Label(self.frame, text=f"ADD", fg="white", bg="#404040", font=("Consolas BOLD", 30))
-        self.AddLabel.grid(row=0, column=1, sticky='e')
-
-        self.MusicLabel = Label(self.frame, text=f"MUSIC!", fg="white", bg="#404040", font=("Consolas BOLD", 30))
-        self.MusicLabel.grid(row=0, column=2, sticky='w')
+        self.addMusicLabel = Label(self.frame, text=f"ADD MUSIC!", fg="white", bg="#404040", font=("Consolas BOLD", 30))
+        self.addMusicLabel.grid(row=0, column=2)
 
         # create buttons and place at a particular
         # location inside the root window
         # when user press the button, the command or
         # function affiliated to that button is executed
+        
         self.addAnger = Button(self.frame, text=' ➕ ANGER MUSIC ',
                                font=("Arial BOLD", 11),
-                               fg='black', bg='LightSalmon2', height=10, width=25, padx=2, pady=2,
-                               command=lambda: self.add_music('anger'))
-        self.addAnger.grid(row=1, column=0)
+                               fg='black', bg='LightSalmon2', height=10, width=25, padx=2, pady=2
+                               ,command=lambda: self.add_music('anger'))
+        self.addAnger.grid(row=1, column=1)
 
         self.addDisgust = Button(self.frame, text=' ➕ DISGUST MUSIC ',
                                  font=("Arial BOLD", 11),
-                                 fg='black', bg='DarkOliveGreen2', height=10, width=25, padx=2, pady=2,
-                                 command=lambda: self.add_music('disgust'))
-        self.addDisgust.grid(row=1, column=1)
-
-        self.addFear = Button(self.frame, text=' ➕ FEAR MUSIC ',
-                              font=("Arial BOLD", 11),
-                              fg='black', bg='ghost white', height=10, width=25, padx=2, pady=2,
-                              command=lambda: self.add_music('fear'))
-        self.addFear.grid(row=1, column=2)
+                                 fg='black', bg='DarkOliveGreen2', height=10, width=25, padx=2, pady=2
+                                ,command=lambda: self.add_music('disgust'))
+        self.addDisgust.grid(row=1, column=2)
 
         self.addHappiness = Button(self.frame, text=' ➕ HAPPINESS MUSIC ',
                                    font=("Arial BOLD", 11),
-                                   fg='black', bg='gold', height=10, width=25, padx=2, pady=2,
-                                   command=lambda: self.add_music('happiness'))
-        self.addHappiness.grid(row=3, column=0)
+                                   fg='black', bg='gold', height=10, width=25, padx=2, pady=2
+                                   ,command=lambda: self.add_music('happiness'))
+        self.addHappiness.grid(row=3, column=1)
 
         self.addNeutral = Button(self.frame, text=' ➕ NEUTRAL MUSIC ',
                                  font=("Arial BOLD", 11),
-                                 fg='black', bg='bisque', height=10, width=25, padx=2, pady=2,
-                                 command=lambda: self.add_music('neutral'))
-        self.addNeutral.grid(row=3, column=1)
+                                 fg='black', bg='bisque', height=10, width=25, padx=2, pady=2
+                                 ,command=lambda: self.add_music('neutral'))
+        self.addNeutral.grid(row=3, column=2) 
 
         self.addSadness = Button(self.frame, text=' ➕ SADNESS MUSIC ',
                                  font=("Arial BOLD", 11),
-                                 fg='black', bg='cornflower blue', height=10, width=25, padx=2, pady=2,
-                                 command=lambda: self.add_music('sadness'))
+                                 fg='black', bg='cornflower blue', height=10, width=25, padx=2, pady=2
+                                 ,command=lambda: self.add_music('sadness'))
         self.addSadness.grid(row=3, column=3)
 
         self.addSurprise = Button(self.frame, text=' ➕ SURPRISE MUSIC ',
                                   font=("Arial BOLD", 11),
-                                  fg='black', bg='VioletRed1', height=10, width=25, padx=2, pady=2,
-                                  command=lambda: self.add_music('surprise'))
-        self.addSurprise.grid(row=5, column=3)
+                                  fg='black', bg='VioletRed1', height=10, width=25, padx=2, pady=2
+                                  ,command=lambda: self.add_music('surprise'))
+        self.addSurprise.grid(row=5, column=2)
+
+        self.addFear = Button(self.frame, text=' ➕ FEAR MUSIC ',
+                              font=("Arial BOLD", 11),
+                              fg='black', bg='ghost white', height=10, width=25, padx=2, pady=2
+                              ,command=lambda: self.add_music('fear'))
+        self.addFear.grid(row=5, column=3)
 
         self.quit = Button(self.frame, text="👋 QUIT", font=("Arial BOLD", 30), fg='black',
                            bg='VioletRed1', height=10, width=25, padx=2, pady=2, command=self.quit)

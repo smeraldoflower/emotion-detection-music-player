@@ -1,17 +1,15 @@
-# Author: Nusaiba Mahmood , Kwame
-# File: Screen_01_SignIn.py
+# Author: Nusaiba Mahmood, Kwame Addo
+# File: SignIn.py
 
-# import everything from tkinter module
-from tkinter import *
 import SignUp
-import re
-from werkzeug.security import generate_password_hash,check_password_hash
-import db
 import Welcome
+import db
+
+import re
+from tkinter import *
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
-
-# Driver code
 
 class SignIn:
     def __init__(self, gui):
@@ -21,40 +19,59 @@ class SignIn:
         
         self.gui.grid_rowconfigure(0, weight=1)
         self.gui.grid_columnconfigure(0, weight=1)
-        self.welcomeLabel = Label(self.frame, text=" Sign In ", fg="white", bg="#404040", font=("Consolas BOLD", 30))
-        self.welcomeLabel.grid(row=0, column=1, padx=5, pady=5, sticky="s")
 
+        # Set the background colour of application's GUI window
+        self.frame.configure(background="#404040", width=800, height=500)
+
+        # GUI Grid configurations
+        self.frame.columnconfigure((0, 2), weight=1, uniform="anything")
+        self.frame.rowconfigure((0, 10), weight=1, uniform="anything")
+        self.frame.pack(fill='both', expand=True)
+        
+        # Sign In Page Title
+        self.signInTitleLabel = Label(self.frame, text=" Sign In ", fg="white", bg="#404040", font=("Consolas BOLD", 30))
+        self.signInTitleLabel.grid(row=0, column=1, padx=5, pady=5, sticky="s")
+
+        # Invalid Username or Password text
+        self.label_auth = Label(self.frame, text="", fg="VioletRed1", bg="#404040", font=("Arial BOLD ITALIC", 12))
+        self.label_auth.grid(row=1, column=1, sticky="n")
+
+        # Username: Entry field
         self.usernameLabel = Label(self.frame, text="Username:", fg="white", bg="#404040", font=("Arial BOLD", 12))
         self.usernameLabel.grid(row=2, column=0, pady=1, padx=1, sticky="e")
-        self.userName = Entry(self.frame, width=30)
+        self.userName = Entry(self.frame, width=30, font=("Arial BOLD", 11))
         self.userName.grid(row=2, column=1, pady=3)
 
+        # Password: Entry field
         self.passwordLabel = Label(self.frame, text="Password:", fg="white", bg="#404040", font=("Arial BOLD", 12))
         self.passwordLabel.grid(row=4, column=0, pady=1, padx=1, sticky="e")
-        self.password = Entry(self.frame,show="*", width=30)
+        self.password = Entry(self.frame,show="*", width=30, font=("Arial BOLD", 11))
         self.password.grid(row=4, column=1, pady=3)
 
-    # create buttons and place at a particular
-    # location inside the root window
-    # when user press the button, the command or
-    # function affiliated to that button is executed
+        # Blank Divider Label for ui spacing
+        self.dividerLabel =Label(self.frame, text="", fg="white", bg="#404040", font=("Consolas BOLD", 11))
+        self.dividerLabel.grid(row=5,column=1, pady=3)
 
-        self.signInButton = Button(self.frame, text=' Sign In ', font=("Arial BOLD", 11), fg='black', bg='light blue', height=1,
-                          width=20,command=self.sign_in)
+        # Create and place buttons in the root window.
+        # The function in the command attribute is executed when the button is clicked.
+
+        # Sign In Button - Switch to Welcome Page in Welcome.py file
+        self.signInButton = Button(self.frame, text=' Sign In ', font=("Arial BOLD", 11), fg='black', bg='light blue', 
+                                   height=1, width=25,command=self.sign_in)
         self.signInButton.grid(row=6, column=1, pady=1)
 
-        self.signUpButton = Button(self.frame, text=' Sign Up ', font=("Arial BOLD", 11), fg='black', bg='light goldenrod', height=1,
-                          width=20,command=self.switch)
+        # Sign Up Button - Switch to Sign Up Page in SignIn.py file
+        self.signUpButton = Button(self.frame, text=' Sign Up ', font=("Arial BOLD", 11), fg='black', bg='light goldenrod', 
+                                   height=1, width=25,command=self.switch)
         self.signUpButton.grid(row=7, column=1, pady=1)
-        self.label_auth = Label(self.frame, text="", fg="white", bg="#404040", font=("Arial BOLD", 12))
 
-        # # set the background colour of GUI window
-        self.frame.configure(background="#404040", width=800, height=500)
-        self.frame.columnconfigure((0, 2), weight=1, uniform="anything")
-        self.frame.rowconfigure((0, 8), weight=1, uniform="anything")
+        # Quit Button - Exit the application
+        self.quitButton = Button(self.frame, text="Quit", font=("Arial BOLD", 11), fg='black', bg='PaleVioletRed2',
+                           height=1, width=25, command=self.quit)
+        self.quitButton.grid(row=8, column=1, padx=1, pady=1)
 
-        self.frame.pack(fill='both', expand=True)
-        self.label_auth.grid(row=8, column=1, sticky="n")
+    
+    # ---------- CLASS FUNCTIONS ------------ #
 
     def switch_welcome(self):
         # self.frame.forget()
@@ -85,14 +102,16 @@ class SignIn:
             return False
         # hashpass = self.hash_password(
         #     self.password.get())
-        if db.signin(self.userName.get(), self.password.get()):
+        if db.signin(self.userName.get(), self.password.get(), self.label_auth):
 
             self.switch_welcome()
 
     def hash_password(self,password):
         hashed_password = generate_password_hash(password)
         return hashed_password
-    # start the GUI
+    
+    def quit(self):
+        self.gui.quit()
 
 
 if __name__ == "__main__":

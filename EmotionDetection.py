@@ -13,6 +13,7 @@ import cv2
 import MusicPlayer
 from MachineLearning import *  # import contains functions for the emotion detection in the fer_live_cam
 import FrameGui
+# from PIL import Image, ImageTk
 
 # application = Tk()  # Instantiate Tkinker class
 #
@@ -120,7 +121,7 @@ class Emotion:
                 # photo_image = ImageTk.PhotoImage(image=captured_image)
                 # self.label_widget.photo_image = photo_image
                 # self.label_widget.configure(image=photo_image)
-                FrameGui.Frame_gui(frame, self.app, True)
+                FrameGui.Frame_gui(frame, self.app, True)   
 
                 try:
                     self.button1.config(text=f"{pred} {self.emo[pred]}")

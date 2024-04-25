@@ -18,7 +18,7 @@ class AddMusic:
     def __init__(self, gui, name):
         self.name = name
         self.gui = gui
-        self.bg = PhotoImage(file="Gojo-PNG.png")
+        self.bg = PhotoImage(file="./Assets/Images/Gojo-PNG.png")
         self.frame = Label(gui, image=self.bg)
         self.gui.attributes('-fullscreen', True)
 

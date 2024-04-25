@@ -3,6 +3,7 @@
 
 # import everything from tkinter module
 from tkinter import *
+from tkinter import messagebox
 
 import SignIn
 import db
@@ -38,13 +39,11 @@ class SignUp:
         self.password = Entry(self.frame,show="*", width=30)
         self.password.grid(row=4, column=1, pady=3)
 
-        self.passwordVerLabel = Label(self.frame, text="Re-enter Password:", fg="white",
-                                      bg="#404040", font=("Arial BOLD", 12))
+        self.passwordVerLabel = Label(self.frame, text="Re-enter Password:", fg="white", bg="#404040", font=("Arial BOLD", 12))
         self.passwordVerLabel.grid(row=6, column=0, pady=1, padx=1, sticky="e")
         self.passwordVer = Entry(self.frame,show="*", width=30)
         self.passwordVer.grid(row=6, column=1, pady=3)
-        self.label_auth = Label(self.frame, text="", fg="white",
-                                      bg="#404040", font=("Arial BOLD", 12))
+        self.label_auth = Label(self.frame, text="", fg="white", bg="#404040", font=("Arial BOLD", 12))
 
         # create buttons and place at a particular
         # location inside the root window
@@ -69,10 +68,29 @@ class SignUp:
     def rais(self):
         self.frame.tkraise()
 
+    # def sign_up(self):
+    #     username_check = re.search("^[A-Za-z][A-Za-z0-9]{4,10}", self.userName.get()) # 4-10 characters, Start with alphabet, no spaces, no symbols
+    #     password_check = re.search("[^\\s]{8,}", self.password.get()) # minimum 8 characters, no spaces
+    #     password_ver = re.search("[^\\s]{8,}", self.passwordVer.get())
+    
+    #     if not username_check or not password_check:
+    #         messagebox.showinfo("Invalid username or password","Username must be 4-10 characters, start with a letter, contain only numbers and letters.\nPassword must be minimum 8 characters, contain no spaces.")
+    #         print("Invalid username or password")
+    #         return False       
+    #     if self.passwordVer.get() != self.password.get():
+    #         messagebox.showerror("Password mismatch", "Please re-enter your passwords.")
+    #         print("Password mismatch")
+    #         return False
+    #     hashpass = self.hash_password(
+    #         self.password.get())
+    #     if db.signup(self.userName.get(), hashpass):
+    #         self.switch()
+
     def sign_up(self):
+        """ Input validation and account creation """
         username_check = re.search("^[A-Za-z][A-Za-z0-9]{4,10}", self.userName.get())
-        password_check = re.search("[^\\s]{8,}", self.password.get())
-        password_ver = re.search("[^\\s]{8,}", self.passwordVer.get())
+        password_check = re.search("\\S{8,}", self.password.get())
+
         if not username_check or not password_check:
             self.label_auth.config(text="Invalid username or password")
             print("Invalid username or password")
@@ -83,14 +101,12 @@ class SignUp:
             return False
         hashpass = self.hash_password(
             self.password.get())
-        if db.signup(self.userName.get(), hashpass):
+        if db.signup(self.userName.get(), hashpass, self.label_auth):
             self.switch()
 
     def hash_password(self,password):
         hashed_password = generate_password_hash(password)
         return hashed_password
-
-
 
 # if __name__ == "__main__":
 #     guii = Tk()

@@ -1,4 +1,4 @@
-# Author: Nusaiba Mahmood, Kwame Addo
+# Authors: Nusaiba Mahmood, Kwame Addo, Yewande Hassan
 # File: SignIn.py
 
 import SignUp
@@ -10,8 +10,8 @@ from tkinter import *
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-
 class SignIn:
+    # ---------- GUI Init Function --------- #
     def __init__(self, gui):
         self.gui = gui
         self.frame = Frame(gui)
@@ -60,7 +60,7 @@ class SignIn:
                                    height=1, width=25,command=self.sign_in)
         self.signInButton.grid(row=6, column=1, pady=1)
 
-        # Sign Up Button - Switch to Sign Up Page in SignIn.py file
+        # Sign Up Button - Switch to Sign Up Page in SignUp.py file
         self.signUpButton = Button(self.frame, text=' Sign Up ', font=("Arial BOLD", 11), fg='black', bg='light goldenrod', 
                                    height=1, width=25,command=self.switch)
         self.signUpButton.grid(row=7, column=1, pady=1)

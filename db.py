@@ -1,3 +1,6 @@
+# Authors: Yewande Hassan, Kwame Addo
+# File: db.py
+
 import tkinter
 import sqlite3
 import re
@@ -18,8 +21,8 @@ def signup(name, password, label):
     c.execute(f"SELECT * FROM signUp where username='{name}'")
     # "checks where user already exists "
     if c.fetchone():
-        label.config(text="Username already exist")
-        print("User already exist")
+        label.config(text="Username already exists")
+        print("User already exists")
         return
     try:
         c.execute("INSERT INTO signUp (username, password) VALUES (?, ?)", (name, password))

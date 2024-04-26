@@ -43,7 +43,7 @@ class Welcome:
         # location inside the root window
         # when user press the button, the command or
         # function affiliated to that button is executed
-        self.button1 = Button(self.frame, text=' ➕ ADD MUSIC DIRECTORY ', 
+        self.button1 = Button(self.frame, text=' ➕ ADD MUSIC ', 
                               font=("Arial BOLD", 11),
                               fg='black', bg='white', height=10, width=25,
                               command=self.switch_addMusic)

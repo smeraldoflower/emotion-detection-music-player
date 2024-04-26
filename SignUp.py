@@ -3,6 +3,7 @@
 
 import SignIn
 import db
+import sqlite3
 
 import re
 from tkinter import *
@@ -121,6 +122,7 @@ class SignUp:
     # ------------------------------------------------------------------------------------------------- #
 
     def sign_up(self):
+        
         """ Input validation and account creation """
         username_check = re.search("^[A-Za-z][A-Za-z0-9]{4,10}", self.userName.get())
         password_check = re.search("\\S{8,}", self.password.get())

@@ -18,7 +18,7 @@ class AddMusic:
     def __init__(self, gui, name):
         self.name = name
         self.gui = gui
-        self.bg = PhotoImage(file="./Assets/Images/Gojo-PNG.png")
+        self.bg = PhotoImage(file="./Assets/Images/music-sikaku4.png")
         self.frame = Label(gui, image=self.bg)
         self.gui.attributes('-fullscreen', True)
 
@@ -72,15 +72,14 @@ class AddMusic:
                               ,command=lambda: self.add_music('fear'))
         self.addFear.grid(row=5, column=3)
 
-        self.quit = Button(self.frame, text="👋 QUIT", font=("Arial BOLD", 30), fg='black',
-                           bg='VioletRed1', height=10, width=25, padx=2, pady=2, command=self.quit)
+        self.signOutButton = Button(self.frame, text="↪ SIGN OUT", font=("Arial BOLD", 12), fg='black',
+                           bg='MediumPurple1', height=10, width=25, padx=2, pady=2, command=self.reset)
+        self.signOutButton.grid(row=6, column=4)
 
-        self.quit.grid(row=6, column=4)
+        self.backButton = Button(self.frame, text="🔙 BACK", font=("Arial BOLD", 12), fg='black',
+                                  bg='MediumPurple1', height=10, width=25, padx=2, pady=2, command=self.back_welcome)
 
-        self.back_button = Button(self.frame, text="🔙 BACK", font=("Arial BOLD", 30), fg='black',
-                                  bg='VioletRed1', height=10, width=25, padx=2, pady=2, command=self.back_welcome)
-
-        self.back_button.grid(row=6, column=0)
+        self.backButton.grid(row=6, column=0)
         # set the background colour of GUI window
 
         # aligns widgets by weighting rows and columns

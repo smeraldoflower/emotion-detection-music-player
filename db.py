@@ -12,12 +12,16 @@ c = conn.cursor()
 c.execute('''CREATE TABLE IF NOT EXISTS signUp
                      (username TEXT, password TEXT)''')
 
+
 def hash_password(password):
     hashed_password = generate_password_hash(password)
     return hashed_password
 
+
 def signup(name, password, label):
     # Insert username and password into the table
+    conn = sqlite3.connect('mydatabase.db')
+
     c.execute(f"SELECT * FROM signUp where username='{name}'")
     # "checks where user already exists "
     if c.fetchone():
@@ -34,6 +38,7 @@ def signup(name, password, label):
     except sqlite3.IntegrityError:
         print("Username already exists")
         return False
+
 
 def signin(name, password, label):
     """ Insert data into the database

@@ -114,10 +114,11 @@ class SignIn:
         self.gui.quit()
 
 
+
 if __name__ == "__main__":
     guii = Tk()
     guii.geometry("800x500")
-
+    guii.bind("<Escape>", lambda e: guii.quit())
 
     # start the GUI
     win = SignIn(guii)

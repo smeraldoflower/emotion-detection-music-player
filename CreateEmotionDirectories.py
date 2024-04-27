@@ -1,3 +1,6 @@
+# Author: Kwame - Team SKYN
+# File Name: CreateEmotionDirectories.py
+
 import os
 
 emotion_dict = {

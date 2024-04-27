@@ -1,5 +1,5 @@
-# Author: Nusaiba Mahmood
-# File: Screen_02_Welcome_User.py
+# Author: Nusaiba Mahmood, Kwame Addo
+# File: Welcome.py
 
 # import everything from tkinter module
 from tkinter import *
@@ -8,26 +8,6 @@ import SignIn
 import EmotionDetection
 import AddMusic
 
-
-# import EmotionDetection
-#
-# # Driver code
-# if __name__ == "__main__":
-#     # create a GUI window
-#     gui = Tk()
-#
-#     # set the background colour of GUI window
-#     gui.configure(background="#404040")
-#
-#     # aligns widgets by weighting rows and columns
-#     gui.columnconfigure((0, 2), weight=1, uniform="anything")
-#     gui.rowconfigure((0, 4), weight=1, uniform="anything")
-#
-#     # set the title of GUI window
-#     gui.title("SKYN Emotion Detection Music Player")
-#
-#     # set the configuration of GUI window
-#     gui.geometry("800x500")
 class Welcome:
     def __init__(self, gui,name):
         self.name = name

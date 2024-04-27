@@ -1,5 +1,6 @@
 # Author: Nusaiba Mahmood
-# File: Screen_02_Welcome_User.py
+# File: AddMusic.py
+
 import shutil
 from tkinter import messagebox
 
@@ -10,9 +11,6 @@ import os
 
 import SignIn
 import Welcome
-
-
-# import EmotionDetection
 
 class AddMusic:
     def __init__(self, gui, name):

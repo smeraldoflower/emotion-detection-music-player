@@ -18,21 +18,24 @@ class Frame_gui:
         self.captured_img = None
         self.photo = None
         self.label = None
-
         self.run(self.frame)
         self.set_pack(self.pack)
 
+
     def set_pack(self, pack):
         if pack:
-
             self.label.grid(row=0, column=0, sticky=tkinter.NSEW)
             # self.container.grid(row=0, column=0,sticky=tkinter.NSEW)
             # self.app.geometry("500x500")
             # self.app.geometry("640x520")
             self.app.attributes('-fullscreen', True)
 
+
             self.app.grid_rowconfigure(0, weight=1)
             self.app.grid_columnconfigure(0, weight=1)
+
+
+
 
 
     def setRaise(self, pack):

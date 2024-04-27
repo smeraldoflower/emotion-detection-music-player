@@ -1,4 +1,10 @@
-#  MODEL Citation: @inproceedings{BarsoumICMI2016,
+# Author: Kwame Addo
+# File: EmotionDetection.py
+
+# Original code referenced and incorporated from: 
+# Satya Mallick https://github.com/spmallick/learnopencv/tree/master/Facial-Emotion-Recognition
+
+# Training MODEL Citation: @inproceedings{BarsoumICMI2016,
 #     title={Training Deep Networks for Facial Expression Recognition with Crowd-Sourced Label Distribution},
 #     author={Barsoum, Emad and Zhang, Cha and Canton Ferrer, Cristian and Zhang, Zhengyou},
 #     booktitle={ACM International Conference on Multimodal Interaction (ICMI)},
@@ -7,6 +13,7 @@
 
 import threading
 from tkinter import *
+
 from cv2 import dnn
 import cv2
 
@@ -122,6 +129,7 @@ class Emotion:
                 # photo_image = ImageTk.PhotoImage(image=captured_image)
                 # self.label_widget.photo_image = photo_image
                 # self.label_widget.configure(image=photo_image)
+                FrameGui.Frame_gui(frame, self.app, True)
                 FrameGui.Frame_gui(frame, self.app, True)
 
                 try:

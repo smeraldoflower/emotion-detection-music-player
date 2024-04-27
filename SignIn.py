@@ -3,7 +3,7 @@
 
 import SignUp
 import Welcome
-import db
+import Database.db as db
 
 import re
 from tkinter import *

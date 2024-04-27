@@ -2,7 +2,7 @@
 # File: SignUp.py
 
 import SignIn
-import db
+import Database.db as db
 import sqlite3
 
 import re

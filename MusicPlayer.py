@@ -9,6 +9,8 @@ from tkinter import *
 import os
 import pygame
 
+import EmotionDetection
+
 
 class Window:
     def __init__(self, master, mood=None):
@@ -42,6 +44,9 @@ class Window:
         self.close_button = Button(self.frame_bottom, text="👋 Quit", command=self.quit,
                                    borderwidth=0, font=("Arial BOLD", 40), bg="#404040", fg="white")
 
+        self.back_button = Button(self.frame_bottom, text="🔙 Back", command=self.back,
+                                    borderwidth=0, font=("Arial BOLD", 40), bg="#404040", fg="white")
+
         self.pause_button = Button(self.frame_bottom, text="⏸", command=self.pause_music,
                                    borderwidth=0, font=("Arial BOLD", 40), bg="#404040", fg="white")
 
@@ -59,7 +64,8 @@ class Window:
         self.prev_button.grid(row=0, column=0, padx=7, pady=10)
         self.pause_button.grid(row=0, column=2, padx=7, pady=10)
         self.next_button.grid(row=0, column=3, padx=7, pady=10)
-        self.close_button.grid(row=0, column=4,padx =7, pady=10, sticky="ws")
+        self.close_button.grid(row=0, column=5,padx =7, pady=10, sticky="ws")
+        self.back_button.grid(row=0, column=4, padx=7, pady=10, sticky="ws")
 
         # self.play_button.grid(row=0,column=0)
         # self.pause_button.pack()
@@ -73,6 +79,7 @@ class Window:
         self.current_song = ""
         self.directory = ""
         self.load_music()
+        self.play_music()
 
     def load_music(self):
         # music_dir = filedialog.askdirectory()
@@ -199,6 +206,11 @@ class Window:
 
             self.current_song = self.songs[self.song_list.curselection()[0]]
             self.play_music(False)
+
+    def back(self):
+        pygame.mixer.quit()
+        self.frame.destroy()
+        EmotionDetection.Emotion(self.master)
 
 
 if __name__ == "__main__":

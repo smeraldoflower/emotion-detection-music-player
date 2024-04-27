@@ -56,7 +56,7 @@ class Emotion:
         self.button1.grid(row=1, column=0)
 
         self.thread_start()
-
+        self.app.bind("<Escape>",lambda e: self.quit())
         # self.label_widget = Label(app) # option
         # self.label_widget.pack()
 
@@ -130,6 +130,7 @@ class Emotion:
                 # self.label_widget.photo_image = photo_image
                 # self.label_widget.configure(image=photo_image)
                 FrameGui.Frame_gui(frame, self.app, True)
+                FrameGui.Frame_gui(frame, self.app, True)
 
                 try:
                     self.button1.config(text=f"{pred} {self.emo[pred]}")
@@ -167,6 +168,10 @@ class Emotion:
         thread_music = threading.Thread(target=MusicPlayer.Window, args=(self.app, mood,))
         thread_music.start()
 
+    def quit(self):
+        self.cancel_cam = True
+        self.cap.release()
+        self.app.quit()
 
 if __name__ == "__main__":
     application = Tk()

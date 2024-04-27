@@ -20,8 +20,9 @@ def hash_password(password):
 
 def signup(name, password, label):
     # Insert username and password into the table
-    conn = sqlite3.connect('mydatabase.db')
-
+    # conn = sqlite3.connect('mydatabase.db')
+    con = sqlite3.connect("mydatabase.db")   
+    c = con.cursor()
     c.execute(f"SELECT * FROM signUp where username='{name}'")
     # "checks where user already exists "
     if c.fetchone():
@@ -31,8 +32,8 @@ def signup(name, password, label):
     try:
         c.execute("INSERT INTO signUp (username, password) VALUES (?, ?)", (name, password))
         # Commit changes and close connection
-        conn.commit()
-        conn.close()
+        con.commit()
+        con.close()
         print("Sign up successful")
         return True
     except sqlite3.IntegrityError:

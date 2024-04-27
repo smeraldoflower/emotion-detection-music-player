@@ -1,15 +1,15 @@
 # Author: Kwame Addo
-# File: Music_player.py
+# File: MusicPlayer.py
+
+import EmotionDetection
+import Welcome
 
 # import everything from tkinter module
-
 import tkinter
 from tkinter import *
 
 import os
 import pygame
-
-import EmotionDetection
 
 
 class Window:
@@ -33,21 +33,22 @@ class Window:
 
         self.frame_bottom = Frame(self.frame, bg="#404040")
 
-        self.play_button = Button(self.frame_bottom, text="▶", command=self.play_music,
-                                  borderwidth=0, font=("Arial BOLD", 40), bg="#404040", fg="white")
-
         self.prev_button = Button(self.frame_bottom, text="⏮", command=self.prev_music,
                                   borderwidth=0, font=("Arial BOLD", 40), bg="#404040", fg="white")
 
+        self.play_button = Button(self.frame_bottom, text="▶", command=self.play_music,
+                                  borderwidth=0, font=("Arial BOLD", 40), bg="#404040", fg="white")
+        
+        self.pause_button = Button(self.frame_bottom, text="⏸", command=self.pause_music,
+                                   borderwidth=0, font=("Arial BOLD", 40), bg="#404040", fg="white")
+
         self.next_button = Button(self.frame_bottom, text="⏭", command=self.next_music,
                                   borderwidth=0, font=("Arial BOLD", 40), bg="#404040", fg="white")
-        self.close_button = Button(self.frame_bottom, text="👋 Quit", command=self.quit,
-                                   borderwidth=0, font=("Arial BOLD", 40), bg="#404040", fg="white")
 
         self.back_button = Button(self.frame_bottom, text="🔙 Back", command=self.back,
                                     borderwidth=0, font=("Arial BOLD", 40), bg="#404040", fg="white")
 
-        self.pause_button = Button(self.frame_bottom, text="⏸", command=self.pause_music,
+        self.close_button = Button(self.frame_bottom, text="❌ Quit", command=self.quit,
                                    borderwidth=0, font=("Arial BOLD", 40), bg="#404040", fg="white")
 
         self.song_list = Listbox(self.frame, bg="black", fg="white", width=100, height=15, font=("Consolas BOLD", 25))
@@ -60,12 +61,15 @@ class Window:
         pygame.mixer.init()
 
         self.frame_bottom.pack()
-        self.play_button.grid(row=0, column=1, padx=7, pady=10)
+        
         self.prev_button.grid(row=0, column=0, padx=7, pady=10)
+        self.play_button.grid(row=0, column=1, padx=7, pady=10)
         self.pause_button.grid(row=0, column=2, padx=7, pady=10)
         self.next_button.grid(row=0, column=3, padx=7, pady=10)
-        self.close_button.grid(row=0, column=5,padx =7, pady=10, sticky="ws")
+
         self.back_button.grid(row=0, column=4, padx=7, pady=10, sticky="ws")
+        self.close_button.grid(row=0, column=5,padx =7, pady=10, sticky="ws")
+      
 
         # self.play_button.grid(row=0,column=0)
         # self.pause_button.pack()
@@ -158,20 +162,20 @@ class Window:
             self.print_song()
             pygame.mixer.music.load(pla)
             pygame.mixer.music.play()
-            self.play_button.configure(bg="#556B2F",highlightbackground="red")
+            self.play_button.configure(bg="light blue",highlightbackground="red")
             self.pause_button.configure(bg="#404040", highlightbackground="red")
 
         else:
             pygame.mixer.music.unpause()
             # self.play_button.configure(bg="#404040", highlightbackground="red")
-            self.play_button.configure(bg="#556B2F",highlightbackground="red")
+            self.play_button.configure(bg="light blue",highlightbackground="red")
 
             self.pause = False
 
     def pause_music(self) -> None:
         """Setting function for the pause. This causes the music to stop when pause is set to false"""
         pygame.mixer.music.pause()
-        self.pause_button.configure(bg="#556B2F", highlightbackground="red")
+        self.pause_button.configure(bg="light blue", highlightbackground="red")
         self.play_button.configure(bg="#404040", highlightbackground="red")
 
         self.pause = False
@@ -212,8 +216,7 @@ class Window:
         self.frame.destroy()
         EmotionDetection.Emotion(self.master)
 
-
-if __name__ == "__main__":
-    app = Tk()
-    Window(app, "Kwame")
-    app.mainloop()
+# if __name__ == "__main__":
+#     app = Tk()
+#     Window(app, "Kwame")
+#     app.mainloop()

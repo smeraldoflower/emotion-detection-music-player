@@ -1,7 +1,9 @@
+# Author: Kwame Addo
+# File: FrameGui.py
+
 import tkinter
 from tkinter import *
 from PIL import Image, ImageTk
-import MusicPlayer
 
 
 class Frame_gui:
@@ -33,9 +35,6 @@ class Frame_gui:
 
             self.app.grid_rowconfigure(0, weight=1)
             self.app.grid_columnconfigure(0, weight=1)
-
-
-
 
 
     def setRaise(self, pack):

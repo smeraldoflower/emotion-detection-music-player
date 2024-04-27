@@ -11,15 +11,17 @@
 #     year={2016}
 # }
 
+import MusicPlayer
+from MachineLearning import *  # import contains functions for the emotion detection in the fer_live_cam
+import FrameGui
+
 import threading
 from tkinter import *
 
 from cv2 import dnn
 import cv2
 
-import MusicPlayer
-from MachineLearning import *  # import contains functions for the emotion detection in the fer_live_cam
-import FrameGui
+
 # from PIL import Image, ImageTk
 
 # application = Tk()  # Instantiate Tkinker class
@@ -51,9 +53,14 @@ class Emotion:
         self.app.configure(background="#404040")
 
         # data structure to catch the most accurate emotion detected
+        # self.playMusicLabel = Label(self.app, text="▶️ PLAY MUSIC: ", fg="white", bg="#404040", font=("Arial BOLD", 25))
+        # self.playMusicLabel.grid(row=1, column=0)
+
         self.emo = {}
-        self.button1 = Button(self.app, text="▶️ PLAY MUSIC", font=("Arial BOLD", 25), fg='black',bg='light blue', height=1, width=20,command=self.action)
-        self.button1.grid(row=1, column=0)
+        self.playMusicButton = Button(self.app, text="▶️PLAY MUSIC: ", font=("Arial BOLD", 25), fg='black',bg='light blue',
+                              height=1, width=35,command=self.action)
+        self.playMusicButton.grid(row=2, column=0)
+        
 
         self.thread_start()
         self.app.bind("<Escape>",lambda e: self.quit())
@@ -133,7 +140,7 @@ class Emotion:
                 FrameGui.Frame_gui(frame, self.app, True)
 
                 try:
-                    self.button1.config(text=f"{pred} {self.emo[pred]}")
+                    self.playMusicButton.config(text=f"▶️PLAY MUSIC: {pred} {self.emo[pred]}")
                 except:
                     print("Mood not detected yet")
             # if self.cancel_cam:
@@ -164,8 +171,9 @@ class Emotion:
                 print(f'Your mood is {k}')
         self.cancel_cam = True
         self.cap.release()
-        self.button1.destroy()
-        thread_music = threading.Thread(target=MusicPlayer.Window, args=(self.app, mood,))
+        self.playMusicButton.destroy()
+        # self.playMusicLabel.destroy()
+        thread_music = threading.Thread(target=MusicPlayer.Window, args=(self.app, mood))
         thread_music.start()
 
     def quit(self):
@@ -173,7 +181,7 @@ class Emotion:
         self.cap.release()
         self.app.quit()
 
-if __name__ == "__main__":
-    application = Tk()
-    Emotion(application)
-    application.mainloop()
+# if __name__ == "__main__":
+#     application = Tk()
+#     Emotion(application)
+#     application.mainloop()

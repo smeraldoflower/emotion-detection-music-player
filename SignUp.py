@@ -12,6 +12,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class SignUp:
+    # ---------- GUI Init Function --------- #
     def __init__(self, gui):
         #""" User Interface in the constructor function """
         self.gui = gui

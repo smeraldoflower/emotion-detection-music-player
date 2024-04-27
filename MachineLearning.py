@@ -1,3 +1,9 @@
+# Author: Kwame Addo
+# File: MachineLearning.py
+
+# Original code referenced and incorporated from: 
+# Satya Mallick https://github.com/spmallick/learnopencv/tree/master/Facial-Emotion-Recognition
+
 # Necessary logic for the Start_cam function
 
 import numpy as np

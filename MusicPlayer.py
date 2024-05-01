@@ -112,7 +112,7 @@ class Window:
 
                 os.chdir(path)
             case "anger":
-                path = "Emotion/surprise"
+                path = "Emotion/anger"
 
                 os.chdir(path)
 
@@ -128,7 +128,7 @@ class Window:
         for song in os.listdir(music_dir):
             """Loops to feel up the songs from the directory to the songs array"""
             name, ext = os.path.splitext(song)
-            if ext == ".mp3":
+            if ext == ".mp3" or ext == ".MP3":
                 self.songs.append(song)
         print(self.directory)
 

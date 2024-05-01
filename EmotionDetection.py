@@ -97,7 +97,7 @@ class Emotion:
 
             if ret:
                 img_ori = frame
-                print(img_ori)
+                # print(img_ori)
                 rect = cv2.resize(img_ori, (width, height))
                 rect = cv2.cvtColor(rect, cv2.COLOR_BGR2RGB)
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -163,8 +163,14 @@ class Emotion:
 
     def action(self):
         """Event handler for the Play Music Button"""
+        if "neutral" not in self.emo:
+            pass
+        else:
+            self.emo["neutral"] = self.emo["neutral"] // 2
+        
         mood_count = max(self.emo.values())
         mood = ""
+
         for k in self.emo.keys():
             if self.emo[k] == mood_count:
                 mood = k
@@ -173,6 +179,10 @@ class Emotion:
         self.cap.release()
         self.playMusicButton.destroy()
         # self.playMusicLabel.destroy()
+        
+        print(self.emo)
+        print(mood)
+        
         thread_music = threading.Thread(target=MusicPlayer.Window, args=(self.app, mood))
         thread_music.start()
 

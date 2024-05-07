@@ -1,8 +1,8 @@
 # Author: Kwame Addo
 # File: MusicPlayer.py
 
-import Modules.EmotionDetection as EmotionDetection
-import Modules.Welcome as Welcome
+import EmotionDetection as EmotionDetection
+import Welcome as Welcome
 
 # import everything from tkinter module
 import tkinter

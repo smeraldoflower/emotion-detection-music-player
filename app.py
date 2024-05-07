@@ -3,7 +3,7 @@
 
 from tkinter import *
 
-import Modules.SignIn as SignIn
+import SignIn as SignIn
 
 if __name__ == "__main__":
     guii = Tk()

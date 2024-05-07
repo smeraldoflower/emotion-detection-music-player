@@ -11,9 +11,9 @@
 #     year={2016}
 # }
 
-import Modules.MusicPlayer as MusicPlayer
-from Modules.MachineLearning import *  # import contains functions for the emotion detection in the fer_live_cam
-import Modules.FrameGui as FrameGui
+import MusicPlayer as MusicPlayer
+from MachineLearning import *  # import contains functions for the emotion detection in the fer_live_cam
+import FrameGui as FrameGui
 
 import threading
 from tkinter import *

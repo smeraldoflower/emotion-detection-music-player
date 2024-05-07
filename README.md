@@ -1,7 +1,7 @@
 # emotion-detection-music-player
 Emotion Detection Music Player system by Team SKYN for CSIT 515 02 SP24
 
-The application can be downloaded here: Download[https://github.com/smeraldoflower/emotion-detection-music-player/archive/refs/heads/main.zip]
+The application can be downloaded here: [Download](https://github.com/smeraldoflower/emotion-detection-music-player/archive/refs/heads/main.zip)
 
 References:
 1. This project references and incorporates code from: Satya Mallick, LearnOpenCV, github.com/spmallick/learnopencv/tree/master/Facial-Emotion-Recognition

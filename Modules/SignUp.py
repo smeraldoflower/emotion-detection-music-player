@@ -1,7 +1,7 @@
 # Authors: Nusaiba Mahmood, Kwame Addo
 # File: SignUp.py
 
-import SignIn
+import Modules.SignIn as SignIn
 import Database.db as db
 import sqlite3
 

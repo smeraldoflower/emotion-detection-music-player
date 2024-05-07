@@ -1,9 +1,9 @@
 # Author: Nusaiba Mahmood, Kwame Addo
 # File: Welcome.py
 
-import SignIn
-import EmotionDetection
-import AddMusic
+import Modules.SignIn as SignIn
+import Modules.EmotionDetection as EmotionDetection
+import Modules.AddMusic as AddMusic
 
 # import everything from tkinter module
 from tkinter import *

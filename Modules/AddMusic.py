@@ -1,8 +1,8 @@
 # Author: Nusaiba Mahmood, Kwame Addo
 # File: AddMusic.py
 
-import SignIn
-import Welcome
+import Modules.SignIn as SignIn
+import Modules.Welcome as Welcome
 
 # import everything from tkinter module
 from tkinter import *

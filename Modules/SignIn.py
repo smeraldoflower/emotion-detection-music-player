@@ -1,8 +1,8 @@
 # Authors: Nusaiba Mahmood, Kwame Addo, Yewande Hassan
 # File: SignIn.py
 
-import SignUp
-import Welcome
+import Modules.SignUp as SignUp
+import Modules.Welcome as Welcome
 import Database.db as db
 
 import re
